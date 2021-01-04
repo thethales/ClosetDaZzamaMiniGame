@@ -67,7 +67,7 @@ function preload() {
 
   font_regular = loadFont('assets/fonts/Staatliches-Regular.ttf');
 
-  fruit_img = loadImage('assets/img/download.png');
+  fruit_img = loadImage('assets/img/fruit.png');
   
   
 

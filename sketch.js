@@ -26,10 +26,6 @@ let colors = {
   'white':'#FFFFFF'
 }
 
-let canvas = {
-  'w': 500,
-  'h': 500
-}
 
 let fruit_basket = [];
 
@@ -51,6 +47,12 @@ function reset() {
 }
  
 function preload() {
+  
+  playarea = {
+    'w': windowWidth,
+    'h': windowHeight * 0.6
+  }
+  
 
   button_press = loadSound('assets/audio/add.mp3');
   fruit_hit = loadSound('assets/audio/mixkit-game-ball-tap-2073.wav');
@@ -73,14 +75,12 @@ function preload() {
     cycleIcon: function(){
       //Lazy load of a random fruit resource
       let seed = getRandomInt(11);
-      console.log(this.fruit_basket)
       this.fruit_basket.push(seed);
-      console.log(this.fruit_basket)
+      
       src = 'assets/img/fruits/'+ seed.toString() + '.png';
       this.icon = loadImage(src);
     },
     hit: function(){
-      //fruit_basket.push(this);
       printFruitBasket(this.fruit_basket);
       fruit_hit.play();
     },
@@ -90,7 +90,7 @@ function preload() {
   btn_up = {
     'src' : 'assets/img/btn_up.png',
     'x': 20 + this.w ,
-    'y': canvas['h'] +60,
+    'y': playarea['h'] +60,
     'w': 80,
     'h': 80,
     'alt': 'Para cima',
@@ -103,7 +103,7 @@ function preload() {
   btn_down = {
     'src' : 'assets/img/btn_down.png',
     'x': 20 + this.w ,
-    'y': canvas['h'] + 60,
+    'y': playarea['h'] + 60,
     'w': 80,
     'h': 80,
     'alt': 'Para baixo',
@@ -116,7 +116,7 @@ function preload() {
   btn_left = {
     'src' : 'assets/img/btn_left.png',
     'x': 20 + this.w ,
-    'y': canvas['h'] +60,
+    'y': playarea['h'] +60,
     'w': 80,
     'h': 80,
     'alt': 'Para a esquerda',
@@ -129,7 +129,7 @@ function preload() {
   btn_right = {
     'src' : 'assets/img/btn_right.png',
     'x': 20 + this.w ,
-    'y': canvas['h'] +60,
+    'y': playarea['h'] +60,
     'w': 80,
     'h': 80,
     'alt': 'Para a direita',
@@ -157,8 +157,10 @@ function setup() {
   controlElem = createDiv();
   controlElem.position(600,600);
   controlElem.id = 'control';
+ 
+  var play_canvas = createCanvas(playarea.w, playarea.h);
+  play_canvas.parent('main');
 
-  createCanvas(windowWidth, 500);
   frameRate(15);
   stroke(255);
   strokeWeight(10);
@@ -342,23 +344,17 @@ function controls(keyCode){
 function createControlButton(){
   /*
     Dinamically creates a N buttons 
-    @param N arguments
+    @param N arguments of type btn_control
   */
   if(arguments.length != 0){
-    let spacing = 10;
-    let x = 30;
-
     for (var i = 0; i < arguments.length; i++){
       btn = arguments[i];
-  
       button = createImg(btn.src,btn.alt);
-      button.parent = controlElem;
+      button.parent('control');
       button.style('width', btn.w + 'px');
       button.style('height', btn.h + 'px');
       button.attribute('class','btn');
-      button.position(x, btn.y);
       button.mousePressed(btn.click);
-      x += btn.w + spacing;
     }
   }
 }
@@ -383,7 +379,7 @@ function getRandomInt(max) {
 function printFruitBasket(arr_fruit){
 
   
-  let max_n_icons = parseInt((windowWidth / 40)) - 1;
+  let max_n_icons = parseInt((playarea.w / 40)) - 1;
   let icon_size = 40;
 
   
@@ -398,7 +394,7 @@ function printFruitBasket(arr_fruit){
       button.attribute('name','icones_ponto');
       button.style('width', icon_size);
       button.style('height', icon_size);
-      button.parent(document.getElementById('s'));
+      button.parent('point_basket');
     }
     
   }
@@ -415,7 +411,7 @@ function printGameStatus(){
   let box_h = 100;
   let box_r = 15;
 
-  let box_relative_x = (windowWidth/2) - (box_w/2)
+  let box_relative_x = (playarea.w/2) - (box_w/2)
 
  
   rect(box_relative_x, box_y, box_w, box_h, box_r,box_r,box_r,box_r);

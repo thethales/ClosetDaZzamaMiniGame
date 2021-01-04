@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no"> 
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
   <title>Closet da Zzama Mini Game</title>
@@ -11,46 +11,46 @@
     body {
       padding: 0;
       margin: 0;
-      
+
     }
-    
+
     /*@font-face {
       font-family: 'Staatliches', cursive;
       src: url("fonts/Staatliches-Regular.ttf");
     }*/
-    
+
     div {
       font-family: 'Staatliches', cursive;
     }
 
-    .btn:active{
-      opacity: 0.6;
+
+    #control {
+      display: grid;
+      justify-items: center;
+      grid-gap: 1px;
+      grid-template-columns: 25% 25% 25% 25%;
+      background-color: #fff;
+      color: #444;
     }
 
+    #point_basket{
+      min-height: 45px;
+    }
 
-
+    .btn:active {
+      opacity: 0.6;
+    }
   </style>
   <script src="p5.js"></script>
   <script src="addons/p5.sound.min.js"></script>
   <script src="sketch.js"></script>
-
-  <script>
-  
-    
-  </script>
+  <script></script>
 </head>
 
 <body>
-  <main>
-  </main>
-  <div id="s"></div>
+  <main id="main"></main>
+  <div id="point_basket"></div>
   <div id="control"></div>
-
-
-
-
-
-
 </body>
 
 </html>

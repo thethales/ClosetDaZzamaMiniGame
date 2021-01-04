@@ -1,3 +1,9 @@
+
+
+
+
+var play_canvas;
+
 // the snake is divided into small segments, which are drawn and edited on each 'draw' call
 let numSegments = 10;
 let direction = 'right';
@@ -34,7 +40,7 @@ function reset() {
   numSegments = 10;
   direction = 'right';
 
-
+ 
   xCor = [];
   yCor = [];
 
@@ -42,8 +48,8 @@ function reset() {
   yFruit = 0;
   wFruit = 30;
   hFruit = 30;
-
-  setup()
+  preload();
+  
 }
  
 function preload() {
@@ -158,7 +164,7 @@ function setup() {
   controlElem.position(600,600);
   controlElem.id = 'control';
  
-  var play_canvas = createCanvas(playarea.w, playarea.h);
+  play_canvas = createCanvas(playarea.w, playarea.h);
   play_canvas.parent('main');
 
   frameRate(15);
@@ -242,7 +248,7 @@ function checkGameStatus() {
     textFont(font_regular);
     loses_game.play();
     scoreElem.html('O Jogo Acabou. Sua pontuação: ' + scoreVal);
-    printGameStatus()
+    printGameStatus(scoreVal)
   }
 }
 
@@ -403,19 +409,28 @@ function printFruitBasket(arr_fruit){
 
 
 
-function printGameStatus(){
-
-  let box_x = 250;
-  let box_y = 250;
-  let box_w = 250;
-  let box_h = 100;
-  let box_r = 15;
-
-  let box_relative_x = (playarea.w/2) - (box_w/2)
-
+function printGameStatus(scoreVal){
  
-  rect(box_relative_x, box_y, box_w, box_h, box_r,box_r,box_r,box_r);
+  modal.classList.toggle("closed");
+  modalOverlay.classList.toggle("closed");
 
-  text('O jogo acabou', box_relative_x, box_y, box_x, box_y);
+  var modalText = document.querySelector("#modal-text");
+  modalText.innerHTML = "Sua pontuação é de " + scoreVal + ' pontos';
 
 }
+
+
+function shareResults(){
+  //Temporary Sharing Format
+  saveCanvas(play_canvas, 'ClosetDaZzama-Mini-Game', 'jpg');
+
+}
+
+function reloadGame(){
+  //Temporary workaround
+  location.reload();
+  return false;
+
+}
+
+///----------------------------------

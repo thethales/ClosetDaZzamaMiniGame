@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
   <title>Closet da Zzama Mini Game</title>
   <style>
     body {
@@ -44,13 +45,52 @@
   <script src="p5.js"></script>
   <script src="addons/p5.sound.min.js"></script>
   <script src="sketch.js"></script>
-  <script></script>
+
 </head>
 
 <body>
   <main id="main"></main>
   <div id="point_basket"></div>
   <div id="control"></div>
+
+  <div class="modal-overlay closed" id="modal-overlay"></div>
+
+  <div class="modal closed" id="modal">
+    <button class="close-button closed" id="close-button">X</button>
+    <div class="modal-guts">
+      <h1 id="modal-title"></h1>
+      <p id="modal-subtitle">Ooops. O Jogo Acabou</p>
+      <p id="modal-text"></p>
+      <img id="modal-btn-reload" class="btn" src="assets/img/reload.png" height="40px" width="40px">
+      <img id="modal-btn-share" class="btn" src="assets/img/share.png" height="40px" width="40px">
+    </div>
+  </div>
+
+
+
+
 </body>
+<script>
+  var modal = document.querySelector("#modal");
+  var modalOverlay = document.querySelector("#modal-overlay");
+  var closeButton = document.querySelector("#close-button");
+  var openButton = document.querySelector("#open-button");
+  var shareButton = document.querySelector("#modal-btn-share");
+  var reloadButton = document.querySelector("#modal-btn-reload");
+
+  closeButton.addEventListener("click", function() {
+    modal.classList.toggle("closed");
+    modalOverlay.classList.toggle("closed");
+  });
+
+  shareButton.addEventListener("click" , function(){
+    shareResults();
+  });
+ 
+  reloadButton.addEventListener("click" , function(){
+    reloadGame();
+  });
+
+</script>
 
 </html>

@@ -390,7 +390,7 @@ function printFruitBasket(arr_fruit){
 
   
   arr_fruit = arr_fruit.slice( arr_fruit.length - max_n_icons, arr_fruit.length);
-  let a = document.getElementById('s');
+  let a = document.getElementById('point_basket');
   a.innerHTML = '';
     
   for(var i = arr_fruit.length ; i >= 0 ; i-- ){

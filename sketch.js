@@ -37,6 +37,13 @@ let fruit_basket = [];
 
 function preload() {
 
+  //PreLoad Sounds
+  aFX_button_press = loadSound('assets/audio/add.mp3');
+  aFX_fruit_hit = loadSound('assets/audio/mixkit-game-ball-tap-2073.wav');
+  aFX_loses_game = loadSound('assets/audio/mixkit-negative-guitar-tone-2324.wav');
+  
+
+
   //In the future this object should enlguf every game variable
   game = {
     game_started : false,
@@ -46,6 +53,9 @@ function preload() {
     },
     getScore: function(){
       return this.score;
+    },
+    gameOver: function(){
+
     }
   }
   
@@ -54,10 +64,7 @@ function preload() {
     'h': windowHeight * 0.6
   }
 
-  button_press = loadSound('assets/audio/add.mp3');
-  fruit_hit = loadSound('assets/audio/mixkit-game-ball-tap-2073.wav');
-  loses_game = loadSound('assets/audio/mixkit-negative-guitar-tone-2324.wav');
-  
+
   font_regular = loadFont('assets/fonts/Staatliches-Regular.ttf');
   fruit_img = loadImage('assets/img/fruit.png');
   
@@ -78,7 +85,7 @@ function preload() {
     },
     hit: function(){
       printFruitBasket(this.fruit_basket);
-      fruit_hit.play();
+      aFX_fruit_hit.play();
     },
     
   }
@@ -92,7 +99,7 @@ function preload() {
     'alt': 'Para cima',
     click : function(){
       controls(87);
-      button_press.play();
+      aFX_button_press.play();
     }
   }
 
@@ -105,7 +112,7 @@ function preload() {
     'alt': 'Para baixo',
     click : function(){
       controls(83);
-      button_press.play();
+      aFX_button_press.play();
     }
   }
 
@@ -118,7 +125,7 @@ function preload() {
     'alt': 'Para a esquerda',
     click : function(){
       controls(65);
-      button_press.play();
+      aFX_button_press.play();
     }
   }
 
@@ -131,7 +138,7 @@ function preload() {
     'alt': 'Para a direita',
     click : function(){
       controls(68);
-      button_press.play();
+      aFX_button_press.play();
     }
   }
 
@@ -146,7 +153,7 @@ function setup() {
     "Bem Vindo (a)",
     "Mini Jogo do Closet da Zzama",
     "Para jogar aperte Play"
-    );
+  );
 
 }
 
@@ -243,7 +250,7 @@ function checkGameStatus() {
     noLoop();
     printGameScore(game.getScore());
     
-    loses_game.play();
+    aFX_loses_game.play();
     
     messageWindow([true,true,false],'','',"Sua pontuação é de " + game.getScore() + ' pontos')
   }

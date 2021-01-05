@@ -145,7 +145,7 @@ function preload() {
 }
 
 function setup() {
-  textFont(font_regular);
+  //textFont(font_regular);
   
   play_canvas = createCanvas(playarea.w, playarea.h);
   play_canvas.parent('main');
@@ -433,18 +433,16 @@ function messageWindow(enabled_btn = [false,false,false],
 
 }
 
+
+
+
 function printGameScore(){
-  background(colors['hot_pink']);
+
   var message = "PONTUAÇÃO = " + game.getScore();
  
-  let bbox = font_regular.textBounds(message, 10, 30, 12);
-  rect(bbox.x, bbox.y, bbox.w, bbox.h)
   
-  textSize(12);
-  text(message, 10, 30);
-  
-  textStyle(NORMAL);
-  //text(message, 25, 25,100,30);
+
+  text(message, 25, 25,100,30);
 }
 
 

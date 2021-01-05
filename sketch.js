@@ -39,7 +39,14 @@ function preload() {
 
   //In the future this object should enlguf every game variable
   game = {
-    game_started : false
+    game_started : false,
+    score: 0,
+    setScoreUp: function(){
+      this.score += 1;
+    },
+    getScore: function(){
+      return this.score;
+    }
   }
   
   playarea = {
@@ -234,14 +241,11 @@ function checkGameStatus() {
     checkSnakeCollision()
   ) {
     noLoop();
+    printGameScore(game.getScore());
     
-    const scoreVal = getScore();
-    var message = "Sua pontuação é de " + scoreVal + ' pontos';
-    textFont(font_regular);
     loses_game.play();
-    scoreElem.html(message);
     
-    messageWindow([true,true,false],'','',message)
+    messageWindow([true,true,false],'','',"Sua pontuação é de " + game.getScore() + ' pontos')
   }
 }
 
@@ -271,8 +275,8 @@ function checkForFruit() {
   image(fruit.icon, xFruit-(wFruit/2), yFruit-(hFruit/2), wFruit, hFruit);
   //if (xCor[xCor.length - 1] === xFruit && yCor[yCor.length - 1] === yFruit) {
   if(snakeAteTheFruit()){
-    var prevScore = getScore();//parseInt(scoreElem.html().split('=')[1].trim());
-    scoreElem.html('Pontuação = ' + (prevScore + 1));
+    game.setScoreUp();
+    scoreElem.html('Pontuação = ' + game.getScore());
     xCor.unshift(xCor[0]);
     yCor.unshift(yCor[0]);
     numSegments++;
@@ -359,15 +363,6 @@ function createControlButton(){
 }
 
 
-
-function getScore(){
-  /*
-    Temporary improvment upon the authors original method
-    Retrieves the score value from the inner html of the upper score text on screen
-  */
-  return parseInt(scoreElem.html().split('=')[1].trim());
-}
-
 function getRandomInt(max) {
   /**
    * Returns a random INT number up to the max parameter value
@@ -435,14 +430,11 @@ function messageWindow(enabled_btn = [false,false,false],
 
 }
 
-function printGameStatus(scoreVal){
+function printGameScore(scoreVal){
  
-  modal.classList.toggle("closed");
-  modalOverlay.classList.toggle("closed");
-
-  var modalText = document.querySelector("#modal-text");
-  modalText.innerHTML = "Sua pontuação é de " + scoreVal + ' pontos';
-
+  var message = "Sua pontuação é de " + scoreVal + ' pontos';
+  textFont(font_regular);
+  scoreElem.html(message);
 }
 
 

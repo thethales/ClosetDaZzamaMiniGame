@@ -55,7 +55,7 @@ function preload() {
       return this.score;
     },
     gameOver: function(){
-
+      aFX_loses_game.play();
     }
   }
   
@@ -145,7 +145,8 @@ function preload() {
 }
 
 function setup() {
-
+  textFont(font_regular);
+  
   play_canvas = createCanvas(playarea.w, playarea.h);
   play_canvas.parent('main');
 
@@ -162,17 +163,12 @@ function setup() {
 
 function startGame(){
   game.game_started = true;
-
-  textFont(font_regular);
-  scoreElem = createDiv('Pontuação = 0');
-  scoreElem.position(20, 20);
-  scoreElem.id = 'score';
-  scoreElem.style('color', colors.white);
   
   frameRate(15);
   stroke(255);
   strokeWeight(10);
   updateFruitCoordinates();
+  printGameScore();
 
   for (let i = 0; i < numSegments; i++) {
     xCor.push(xStart + i * diff);
@@ -180,8 +176,6 @@ function startGame(){
   }
 
   //Interface
-  console.log(fruit_img)
-  image(fruit_img, 600, 650, 30,30);
   createControlButton(btn_up, btn_down, btn_left, btn_right);
 }
 
@@ -189,9 +183,12 @@ function startGame(){
 function draw() {
   if(game.game_started){
     background(colors['hot_pink']);
+    printGameScore();
+
     for (let i = 0; i < numSegments - 1; i++) {
       line(xCor[i], yCor[i], xCor[i + 1], yCor[i + 1]);
     }
+
     updateSnakeCoordinates();
     checkGameStatus();
     checkForFruit();
@@ -248,9 +245,8 @@ function checkGameStatus() {
     checkSnakeCollision()
   ) {
     noLoop();
-    printGameScore(game.getScore());
-    
-    aFX_loses_game.play();
+       
+    game.gameOver()
     
     messageWindow([true,true,false],'','',"Sua pontuação é de " + game.getScore() + ' pontos')
   }
@@ -283,7 +279,7 @@ function checkForFruit() {
   //if (xCor[xCor.length - 1] === xFruit && yCor[yCor.length - 1] === yFruit) {
   if(snakeAteTheFruit()){
     game.setScoreUp();
-    scoreElem.html('Pontuação = ' + game.getScore());
+    //scoreElem.html('Pontuação = ' + game.getScore());
     xCor.unshift(xCor[0]);
     yCor.unshift(yCor[0]);
     numSegments++;
@@ -437,11 +433,18 @@ function messageWindow(enabled_btn = [false,false,false],
 
 }
 
-function printGameScore(scoreVal){
+function printGameScore(){
+  background(colors['hot_pink']);
+  var message = "PONTUAÇÃO = " + game.getScore();
  
-  var message = "Sua pontuação é de " + scoreVal + ' pontos';
-  textFont(font_regular);
-  scoreElem.html(message);
+  let bbox = font_regular.textBounds(message, 10, 30, 12);
+  rect(bbox.x, bbox.y, bbox.w, bbox.h)
+  
+  textSize(12);
+  text(message, 10, 30);
+  
+  textStyle(NORMAL);
+  //text(message, 25, 25,100,30);
 }
 
 

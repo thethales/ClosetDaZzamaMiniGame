@@ -21,7 +21,6 @@ let wFruit = 30;
 let hFruit = 30;
 
 let scoreElem;
-let controlElem;
 let font_regular;
 
 let colors = {
@@ -36,41 +35,25 @@ let colors = {
 let fruit_basket = [];
 
 
-function reset() {
-  numSegments = 10;
-  direction = 'right';
-
- 
-  xCor = [];
-  yCor = [];
-
-  xFruit = 0;
-  yFruit = 0;
-  wFruit = 30;
-  hFruit = 30;
-  preload();
-  
-}
- 
 function preload() {
+
+  //In the future this object should enlguf every game variable
+  game = {
+    game_started : false
+  }
   
   playarea = {
     'w': windowWidth,
     'h': windowHeight * 0.6
   }
-  
 
   button_press = loadSound('assets/audio/add.mp3');
   fruit_hit = loadSound('assets/audio/mixkit-game-ball-tap-2073.wav');
   loses_game = loadSound('assets/audio/mixkit-negative-guitar-tone-2324.wav');
   
-
   font_regular = loadFont('assets/fonts/Staatliches-Regular.ttf');
-
   fruit_img = loadImage('assets/img/fruit.png');
   
-  
-
   fruit = {
     icon: loadImage('assets/img/fruits/1.png'),
     w: 30,
@@ -148,25 +131,30 @@ function preload() {
 }
 
 function setup() {
+
+  play_canvas = createCanvas(playarea.w, playarea.h);
+  play_canvas.parent('main');
+
+  messageWindow([false,false,true],
+    "Bem Vindo (a)",
+    "Mini Jogo do Closet da Zzama",
+    "Para jogar aperte Play"
+    );
+
+}
+
+
+
+
+function startGame(){
+  game.game_started = true;
+
   textFont(font_regular);
   scoreElem = createDiv('Pontuação = 0');
   scoreElem.position(20, 20);
   scoreElem.id = 'score';
   scoreElem.style('color', colors.white);
-
-
-  pointsElem = createDiv();
-  pointsElem.position(501,501);
-  pointsElem.id = 'points';
   
-
-  controlElem = createDiv();
-  controlElem.position(600,600);
-  controlElem.id = 'control';
- 
-  play_canvas = createCanvas(playarea.w, playarea.h);
-  play_canvas.parent('main');
-
   frameRate(15);
   stroke(255);
   strokeWeight(10);
@@ -185,13 +173,15 @@ function setup() {
 
 
 function draw() {
-  background(colors['hot_pink']);
-  for (let i = 0; i < numSegments - 1; i++) {
-    line(xCor[i], yCor[i], xCor[i + 1], yCor[i + 1]);
+  if(game.game_started){
+    background(colors['hot_pink']);
+    for (let i = 0; i < numSegments - 1; i++) {
+      line(xCor[i], yCor[i], xCor[i + 1], yCor[i + 1]);
+    }
+    updateSnakeCoordinates();
+    checkGameStatus();
+    checkForFruit();
   }
-  updateSnakeCoordinates();
-  checkGameStatus();
-  checkForFruit();
 }
 
 /*
@@ -244,11 +234,14 @@ function checkGameStatus() {
     checkSnakeCollision()
   ) {
     noLoop();
-    const scoreVal = getScore();//parseInt(scoreElem.html().substring(8));
+    
+    const scoreVal = getScore();
+    var message = "Sua pontuação é de " + scoreVal + ' pontos';
     textFont(font_regular);
     loses_game.play();
-    scoreElem.html('O Jogo Acabou. Sua pontuação: ' + scoreVal);
-    printGameStatus(scoreVal)
+    scoreElem.html(message);
+    
+    messageWindow([true,true,false],'','',message)
   }
 }
 
@@ -407,7 +400,40 @@ function printFruitBasket(arr_fruit){
   
 }
 
+function messageWindow(enabled_btn = [false,false,false], 
+  title = '', 
+  subtitle = '', 
+  text = ''){
+  /**Calls the modal element applying custom info and setup 
+  * @param enabled_btn array of boolean
+  *      [0] - true/false - Enables or disables the Reload Button
+  *      [1] - true/false - Enables or disables the Sahre Button
+  *      [2] - true/false - Enables or disables the Play Button
+  * @param title Title of the Window
+  * @param subtitle Subtitle of the Window
+  * @param text Message
+  */
 
+
+  let modalText = document.querySelector("#modal-text");
+  let modalTitle = document.querySelector("#modal-title");
+  let modalSubTitle = document.querySelector("#modal-subtitle");
+
+  let btnReload = document.querySelector("#modal-btn-reload");
+  let btnShare = document.querySelector("#modal-btn-share");
+  let btnPlay = document.querySelector("#modal-btn-play");
+
+  modalTitle.innerHTML = title;
+  modalSubTitle.innerHTML = subtitle;
+  modalText.innerHTML = text;
+
+  btnReload.classList.toggle('closed',!enabled_btn[0]);
+  btnShare.classList.toggle('closed',!enabled_btn[1]);
+  btnPlay.classList.toggle('closed',!enabled_btn[2]);
+
+  showModal(true);
+
+}
 
 function printGameStatus(scoreVal){
  
@@ -431,6 +457,15 @@ function reloadGame(){
   location.reload();
   return false;
 
+}
+
+function showModal(visible){
+  /**
+   * Shows or Hides the app's modal Windows element
+   * @param visible Booelean, shows or hides
+   */
+  modal.classList.toggle("closed",!visible);
+  modalOverlay.classList.toggle("closed",!visible);
 }
 
 ///----------------------------------

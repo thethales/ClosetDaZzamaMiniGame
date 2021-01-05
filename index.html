@@ -61,8 +61,9 @@
       <h1 id="modal-title"></h1>
       <p id="modal-subtitle">Ooops. O Jogo Acabou</p>
       <p id="modal-text"></p>
-      <img id="modal-btn-reload" class="btn" src="assets/img/reload.png" height="40px" width="40px">
-      <img id="modal-btn-share" class="btn" src="assets/img/share.png" height="40px" width="40px">
+      <img id="modal-btn-reload" class="btn closed" src="assets/img/reload.png" height="40px" width="40px">
+      <img id="modal-btn-share" class="btn closed" src="assets/img/share.png" height="40px" width="40px">
+      <img id="modal-btn-play" class="btn closed" src="assets/img/play.png" height="40px" width="40px">
     </div>
   </div>
 
@@ -77,6 +78,7 @@
   var openButton = document.querySelector("#open-button");
   var shareButton = document.querySelector("#modal-btn-share");
   var reloadButton = document.querySelector("#modal-btn-reload");
+  var playButton = document.querySelector("#modal-btn-play");
 
   closeButton.addEventListener("click", function() {
     modal.classList.toggle("closed");
@@ -89,6 +91,11 @@
  
   reloadButton.addEventListener("click" , function(){
     reloadGame();
+  });
+
+  playButton.addEventListener("click" , function(){
+    showModal(false);
+    startGame();
   });
 
 </script>

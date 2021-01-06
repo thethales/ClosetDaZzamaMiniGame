@@ -18,7 +18,8 @@
     main{
       background-color: #FFAEBC;
       background-image:url("assets/img/tile.png");
-      
+      height: 60%;
+      width: 100%;
     }
 
     /*@font-face {
@@ -40,13 +41,19 @@
       color: #444;
     }
 
-    #point_basket{
+    #fruit_basket{
       min-height: 45px;
+    }
+
+    #game{
+      margin: auto auto auto auto;
     }
 
     .btn:active {
       opacity: 0.6;
     }
+
+
   </style>
   <script src="p5.js"></script>
   <script src="addons/p5.sound.min.js"></script>
@@ -55,8 +62,10 @@
 </head>
 
 <body>
-  <main id="main"></main>
-  <div id="point_basket"></div>
+  <main id="main">
+    <div id="game"></div>
+  </main>
+  <div id="fruit_basket"></div>
   <div id="control"></div>
 
   <div class="modal-overlay closed" id="modal-overlay"></div>

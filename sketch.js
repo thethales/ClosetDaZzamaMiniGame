@@ -26,13 +26,14 @@ let font_regular;
 let colors = {
   'tiffany_blue' : '#A0E7E5',
   'hot_pink' : '#FFAEBC',
+  'clear_pink': '#FFC7D6',
   'yellow':'#FBE7C6',
   'mint':'#B4F8C8',
   'white':'#FFFFFF'
 }
 
 
-let fruit_basket = [];
+//let fruit_basket = [];
 
 
 function preload() {
@@ -78,16 +79,14 @@ function preload() {
     cycleIcon: function(){
       //Lazy load of a random fruit resource
       let seed = getRandomInt(11);
-      this.fruit_basket.push(seed);
-      
-      src = 'assets/img/fruits/'+ seed.toString() + '.png';
-      this.icon = loadImage(src);
+      let fruit_icon_uri = 'assets/img/fruits/'+ seed.toString() + '.png';
+      this.fruit_basket.push(fruit_icon_uri);
+      this.icon = loadImage(fruit_icon_uri);
     },
     hit: function(){
-      printFruitBasket(this.fruit_basket);
+      printFruitBasket();
       aFX_fruit_hit.play();
-    },
-    
+    }
   }
   
   btn_up = {
@@ -148,7 +147,7 @@ function setup() {
   //textFont(font_regular);
   
   play_canvas = createCanvas(playarea.w, playarea.h);
-  play_canvas.parent('main');
+  play_canvas.parent('game');
 
   messageWindow([false,false,true],
     "Bem Vindo (a)",
@@ -373,29 +372,29 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-function printFruitBasket(arr_fruit){
+function printFruitBasket(){
 
-  
-  let max_n_icons = parseInt((playarea.w / 40)) - 1;
   let icon_size = 40;
+  let n_fruits_in_basket = fruit.fruit_basket.length;
+  let max_n_icons = parseInt((playarea.w / icon_size)) - 1;
+  let arr_fruit = fruit.fruit_basket;
 
+  if(n_fruits_in_basket > max_n_icons){
+    arr_fruit = fruit.fruit_basket.slice( n_fruits_in_basket - max_n_icons, n_fruits_in_basket);
+  }
   
-  arr_fruit = arr_fruit.slice( arr_fruit.length - max_n_icons, arr_fruit.length);
-  let a = document.getElementById('point_basket');
-  a.innerHTML = '';
-    
+  document.getElementById('fruit_basket').innerHTML = '';
+  
   for(var i = arr_fruit.length ; i >= 0 ; i-- ){
     let one_fruit = arr_fruit[i];
     if (one_fruit !== undefined){
-      button = createImg('assets/img/fruits/' + one_fruit + '.png','+1');
+      button = createImg(one_fruit,'+1');
       button.attribute('name','icones_ponto');
       button.style('width', icon_size);
       button.style('height', icon_size);
-      button.parent('point_basket');
+      button.parent('fruit_basket');
     }
-    
   }
-  
 }
 
 function messageWindow(enabled_btn = [false,false,false], 
@@ -437,17 +436,15 @@ function messageWindow(enabled_btn = [false,false,false],
 
 
 function printGameScore(){
-
   var message = "PONTUAÇÃO = " + game.getScore();
- 
-  
-
   text(message, 25, 25,100,30);
 }
 
 
 function shareResults(){
   //Temporary Sharing Format
+  fruits = fruit.fruit_basket;
+  image(img, 10, 10, 50, 50);
   saveCanvas(play_canvas, 'ClosetDaZzama-Mini-Game', 'jpg');
 
 }

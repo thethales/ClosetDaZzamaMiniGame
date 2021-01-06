@@ -442,17 +442,30 @@ function printGameScore(){
 
 
 function shareResults(){
-  domtoimage.toJpeg(document.getElementById('share'), { quality: 0.95 })
+
+  let share_envelope_fruits = document.getElementById('share_envelope_fruits');
+  let share_pontuacao = document.getElementById('share_pontuacao');
+
+  share_envelope_fruits.innerHTML = '';
+  share_pontuacao.innerHTML = "Eu marquei " + fruit.fruit_basket.length + ' pontos';
+
+  for(var i = 0; i < fruit.fruit_basket.length; i++){
+    let img = document.createElement('img');
+    img.setAttribute('src',fruit.fruit_basket[i]);
+    share_envelope_fruits.append(img);
+  }
+
+  let sharable_image = document.getElementById('share');
+  sharable_image.classList.toggle('closed',false);
+  domtoimage.toJpeg(sharable_image, { quality: 0.95 })
     .then(function (dataUrl) {
         var link = document.createElement('a');
-        link.download = 'my-image-name.jpeg';
+        link.download = 'minha-pontuação.jpg';
         link.href = dataUrl;
         link.click();
+        
     });
-
-
-    //saveCanvas(play_canvas, 'ClosetDaZzama-Mini-Game', 'jpg');
-
+    saveCanvas(play_canvas, 'ClosetDaZzama-Mini-Game', 'jpg');
 }
 
 function reloadGame(){

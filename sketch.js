@@ -56,6 +56,7 @@ function preload() {
       return this.score;
     },
     gameOver: function(){
+      this.game_started = false;
       aFX_loses_game.play();
     }
   }
@@ -149,6 +150,7 @@ function setup() {
   play_canvas = createCanvas(playarea.w, playarea.h);
   play_canvas.parent('game');
 
+
   messageWindow([false,false,true],
     "Bem Vindo (a)",
     "Mini Jogo do Closet da Zzama",
@@ -156,8 +158,6 @@ function setup() {
   );
 
 }
-
-
 
 
 function startGame(){
@@ -442,10 +442,7 @@ function printGameScore(){
 
 
 function shareResults(){
-  //Temporary Sharing Format
-  fruits = fruit.fruit_basket;
-  image(img, 10, 10, 50, 50);
-  saveCanvas(play_canvas, 'ClosetDaZzama-Mini-Game', 'jpg');
+saveCanvas(play_canvas, 'ClosetDaZzama-Mini-Game', 'jpg');
 
 }
 

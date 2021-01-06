@@ -442,7 +442,16 @@ function printGameScore(){
 
 
 function shareResults(){
-saveCanvas(play_canvas, 'ClosetDaZzama-Mini-Game', 'jpg');
+  domtoimage.toJpeg(document.getElementById('share'), { quality: 0.95 })
+    .then(function (dataUrl) {
+        var link = document.createElement('a');
+        link.download = 'my-image-name.jpeg';
+        link.href = dataUrl;
+        link.click();
+    });
+
+
+    //saveCanvas(play_canvas, 'ClosetDaZzama-Mini-Game', 'jpg');
 
 }
 

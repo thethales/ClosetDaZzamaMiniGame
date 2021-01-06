@@ -247,7 +247,7 @@ function checkGameStatus() {
        
     game.gameOver()
     
-    messageWindow([true,true,false],'','',"Sua pontuação é de " + game.getScore() + ' pontos')
+    messageWindow([true,true,false],'','Ooops. O Jogo Acabou',"Sua pontuação é de " + game.getScore() + ' pontos')
   }
 }
 

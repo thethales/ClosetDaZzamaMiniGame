@@ -465,7 +465,8 @@ function shareResults(){
         link.click();
         
     });
-    saveCanvas(play_canvas, 'ClosetDaZzama-Mini-Game', 'jpg');
+    //saveCanvas(play_canvas, 'ClosetDaZzama-Mini-Game', 'jpg');
+  sharable_image.classList.toggle('closed',true);
 }
 
 function reloadGame(){

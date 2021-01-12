@@ -48,9 +48,19 @@ function preload() {
   //In the future this object should enlguf every game variable
   game = {
     game_started : false,
+    viewport: {
+      'w': 0,
+      'h': 0
+    },
     score: 0,
     setScoreUp: function(){
       this.score += 1;
+    },
+    setViewPort: function(){
+       let a = document.getElementById('game_viewport');
+       this.viewport.h = a.offsetHeight;
+       this.viewport.w = a.offsetWidth;
+       console.log(this.viewport.h)
     },
     getScore: function(){
       return this.score;
@@ -62,8 +72,8 @@ function preload() {
   }
   
   playarea = {
-    'w': windowWidth,
-    'h': windowHeight * 0.6
+    'w': game.viewport.w,
+    'h': game.viewport.h
   }
 
 
@@ -78,7 +88,7 @@ function preload() {
     y: yFruit-(this.w/2),
     fruit_basket : [],
     cycleIcon: function(){
-      //Lazy load of a random fruit resource
+      //Lazy load of random fruit resource
       let seed = getRandomInt(11);
       let fruit_icon_uri = 'assets/img/fruits/'+ seed.toString() + '.png';
       this.fruit_basket.push(fruit_icon_uri);
@@ -146,10 +156,9 @@ function preload() {
 
 function setup() {
   //textFont(font_regular);
-  
-  play_canvas = createCanvas(playarea.w, playarea.h);
+  game.setViewPort();
+  play_canvas = createCanvas(game.viewport.w, game.viewport.h);
   play_canvas.parent('game');
-
 
   messageWindow([false,false,true],
     "Bem Vindo (a)",
@@ -376,9 +385,9 @@ function printFruitBasket(){
 
   let icon_size = 40;
   let n_fruits_in_basket = fruit.fruit_basket.length;
-  let max_n_icons = parseInt((playarea.w / icon_size)) - 1;
+  let max_n_icons = parseInt((game.viewport.w / icon_size));
   let arr_fruit = fruit.fruit_basket;
-
+  
   if(n_fruits_in_basket > max_n_icons){
     arr_fruit = fruit.fruit_basket.slice( n_fruits_in_basket - max_n_icons, n_fruits_in_basket);
   }

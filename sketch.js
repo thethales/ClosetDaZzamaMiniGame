@@ -428,7 +428,6 @@ function messageWindow(enabled_btn = [false,false,false],
   * @param text Message
   */
 
-
   let modalText = document.querySelector("#modal-text");
   let modalTitle = document.querySelector("#modal-title");
   let modalSubTitle = document.querySelector("#modal-subtitle");
@@ -446,17 +445,15 @@ function messageWindow(enabled_btn = [false,false,false],
   btnPlay.classList.toggle('closed',!enabled_btn[2]);
 
   showModal(true);
-
 }
-
-
-
 
 function printGameScore(){
   var message = "PONTUAÇÃO = " + game.getScore();
-  text(message, 25, 25,100,30);
+  //text(message, 25, 25,100,30);
+  //A escrita de texto em alto FPS gera comportamento imprevisivel
+  let a = document.getElementById('game_score');
+  a.innerHTML = message;
 }
-
 
 function shareResults(){
 

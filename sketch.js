@@ -160,11 +160,16 @@ function setup() {
   play_canvas = createCanvas(game.viewport.w, game.viewport.h);
   play_canvas.parent('game');
 
-  messageWindow([false,false,true],
-    "Bem Vindo (a)",
-    "Mini Jogo do Closet da Zzama",
-    "Para jogar aperte Play"
-  );
+
+  if(localStorage.getItem('creloadgame') == 'true'){
+    startGame();
+  }else{
+    messageWindow([false,false,true],
+      "Bem Vindo (a)",
+      "Mini Jogo do Closet da Zzama",
+      "Para jogar aperte Play"
+    );  
+  }
 
 }
 
@@ -485,6 +490,7 @@ function shareResults(){
 
 function reloadGame(){
   //Temporary workaround
+  localStorage.setItem('creloadgame','true');
   location.reload();
   return false;
 

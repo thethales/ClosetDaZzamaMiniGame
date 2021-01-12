@@ -264,7 +264,7 @@ function checkGameStatus() {
        
     game.gameOver()
     
-    messageWindow([true,true,false],'','Ooops. O Jogo Acabou',"Sua pontuação é de " + game.getScore() + ' pontos')
+    messageWindow([true,true,false],'','Ooops. O Jogo Acabou',"Sua pontuação é de " + game.getScore() + ' pontos clique no botão para compartilhar ;)')
   }
 }
 
@@ -368,13 +368,17 @@ function createControlButton(){
     Dinamically creates a N buttons 
     @param N arguments of type btn_control
   */
+
+  let max_w = parseInt((game.viewport.w / arguments.length)) - 5;
+
+
   if(arguments.length != 0){
     for (var i = 0; i < arguments.length; i++){
       btn = arguments[i];
       button = createImg(btn.src,btn.alt);
       button.parent('control');
-      button.style('width', btn.w + 'px');
-      button.style('height', btn.h + 'px');
+      button.style('width', max_w + 'px');
+      button.style('height', max_w + 'px');
       button.attribute('class','btn');
       button.mousePressed(btn.click);
     }

@@ -68,6 +68,10 @@ function preload() {
     gameOver: function(){
       this.game_started = false;
       aFX_loses_game.play();
+    },
+    gameStart: function(){
+      this.game_started = true;
+      localStorage.setItem('creloadgame','false');
     }
   }
   
@@ -175,8 +179,7 @@ function setup() {
 
 
 function startGame(){
-  game.game_started = true;
-  
+  game.gameStart();
   frameRate(15);
   stroke(255);
   strokeWeight(10);

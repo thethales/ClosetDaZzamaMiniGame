@@ -9,7 +9,7 @@
 
 Projeto experimental
 
-Disponobildiade em breve
+Disponibilidade em breve
 
 
 Link de Acesso: https://thethales.github.io/ClosetDaZzamaMiniGame/
